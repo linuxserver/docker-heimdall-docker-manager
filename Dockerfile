@@ -13,13 +13,14 @@ ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 RUN \
  apk add --no-cache \
 	curl \
+	jq \
 	php7-ctype \
 	php7-intl \
 	php7-pdo_sqlite \
 	php7-tokenizer \
 	tar && \
  echo "**** install heimdall-docker-manager ****" && \
- HEIM_VER="$(curl -sX GET https://api.github.com/repos/linuxserver/heimdall-docker-manager/releases/latest | grep 'tag_name' | cut -d\" -f4)" && \
+ HEIM_VER="$(curl -sX GET https://api.github.com/repos/linuxserver/heimdall-docker-manager/tags | jq -r '.[0].name')" && \
  mkdir -p \
 	/var/www/localhost/heimdall && \
  curl -o \
