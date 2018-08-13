@@ -1,0 +1,23 @@
+#!/usr/bin/with-contenv bash
+
+# create folders
+mkdir -p \
+  /config/www/{backgrounds,icons}
+
+# symlink user config
+
+symlinks=( \
+/var/www/localhost/heimdall/storage/app/public/backgrounds \
+/var/www/localhost/heimdall/storage/app/public/icons \
+/var/www/localhost/heimdall/database/app.sqlite )
+
+for i in "${symlinks[@]}"
+do
+[[ -e "$i" && ! -L "$i" ]] && rm -rf "$i"
+[[ ! -L "$i" ]] && ln -s /config/www/"$(basename "$i")" "$i"
+done
+
+# permissions
+chown -R abc:abc \
+	/config \
+	/var/www/localhost/heimdall
