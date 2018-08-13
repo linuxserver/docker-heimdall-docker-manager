@@ -21,3 +21,6 @@ done
 chown -R abc:abc \
 	/config \
 	/var/www/localhost/heimdall
+
+# provide abc with docker.sock access
+usermod -aG $(stat -c %g /var/run/docker.sock) abc
